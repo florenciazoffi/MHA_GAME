@@ -31,3 +31,26 @@ def moveU( board, blank_cell_idx, num_cols, num_rows ):
     board[blank_cell_idx + num_cols], board[blank_cell_idx] = board[blank_cell_idx], board[blank_cell_idx + num_cols]
     return blank_cell_idx + num_cols
 
+def createBoard( num_rows, num_cols, num_cells ):
+    board = []
+
+    for i in range( num_cells ): board.append(i)
+
+    blank_cell_idx = num_cells - 1
+    board[blank_cell_idx] = -1
+
+    for i in range( configuration.RANDNUM ):
+        direction = random.randint( 0, 4 )
+
+        if direction == 0: blank_cell_idx = moveL( board, blank_cell_idx, num_cols )
+        elif direction == 1: blank_cell_idx = moveR( board, blank_cell_idx, num_cols )
+        elif direction == 2: blank_cell_idx = moveU( board, blank_cell_idx, num_cols, num_rows )
+        elif direction == 3: blank_cell_idx = moveD( board, blank_cell_idx, num_cols )
+    
+    return board, blank_cell_idx
+
+def getImagePaths( rootdir ):
+    image_names = os.listdir( rootdir )
+    assert len( image_names ) > 0
+    return os.path.join( rootdir, random.choice( image_names ) )
+
